@@ -1,18 +1,18 @@
 # Farewell Michelle
 
-Halaman surat perpisahan personal untuk Michelle dengan nuansa ungu, kartu kaca, latar 3D, dan animasi saat membaca. Dibangun menggunakan React untuk pengalaman membaca satu halaman di desktop maupun ponsel.
+A personal farewell letter for Michelle, presented with a purple palette, glass cards, a 3D background, and reading animations. Built with React as a single-page reading experience for desktop and mobile.
 
-## Fitur
+## Features
 
-- Pembuka dengan animasi teks dan petunjuk scroll.
-- Tujuh paragraf surat yang muncul bertahap saat masuk viewport.
-- Latar 3D dengan bentuk organik, partikel, serta warna dan kamera yang mengikuti scroll.
-- Kartu kaca dengan tilt mouse, percikan klik/tap, dan scroll halus.
-- Indikator progres membaca dan tanda tangan bergaya tulisan tangan.
+- Opening section with animated text and a scroll hint.
+- Seven letter paragraphs that appear as they enter the viewport.
+- A 3D background with organic shapes, particles, and colors and camera movement that respond to scrolling.
+- Glass cards with mouse tilt, click/tap sparkles, and smooth scrolling.
+- Reading progress indicator and a handwritten-style signature.
 
-## Mulai cepat
+## Quick start
 
-Siapkan Node.js dan Yarn Classic **1.22.22**, sesuai `packageManager` frontend. Repository tidak mengunci versi Node. Dari root proyek, jalankan di PowerShell:
+Install Node.js and Yarn Classic **1.22.22**, matching the frontend's package manager declaration. The repository does not pin a Node version. From the project root, run in PowerShell:
 
 ```powershell
 cd frontend
@@ -20,67 +20,67 @@ yarn install --frozen-lockfile
 yarn start
 ```
 
-Buka [localhost:3000](http://localhost:3000). Root tidak memiliki `package.json`; jalankan Yarn dari `frontend` menggunakan `frontend/yarn.lock`.
+Open [localhost:3000](http://localhost:3000). The root has no `package.json`; run Yarn from `frontend` using `frontend/yarn.lock`.
 
-Halaman saat ini tidak memerlukan backend, MongoDB, atau environment variable frontend. Isi surat tersimpan dalam komponen React.
+The current page does not require the backend, MongoDB, or frontend environment variables. The letter content is stored in React components.
 
-## Dokumentasi
+## Documentation
 
-| Panduan | Isi |
+| Guide | Contents |
 | --- | --- |
-| [Pengembangan](docs/DEVELOPMENT.md) | Setup, arsitektur, konfigurasi, build, verifikasi, dan troubleshooting |
-| [Kustomisasi](docs/CUSTOMIZATION.md) | Mengubah surat, nama, warna, dan animasi |
-| [Backend opsional](docs/BACKEND.md) | Setup Python/MongoDB, environment, dan API |
-| [Frontend](frontend/README.md) | Ringkasan perintah frontend |
+| [Development](docs/DEVELOPMENT.md) | Setup, architecture, configuration, builds, verification, and troubleshooting |
+| [Customization](docs/CUSTOMIZATION.md) | Editing the letter, names, colors, and animations |
+| [Optional backend](docs/BACKEND.md) | Python/MongoDB setup, environment variables, and API |
+| [Frontend](frontend/README.md) | Frontend command reference |
 
-## Struktur proyek
+## Project structure
 
 ```text
 farewell-michelle/
 ├── frontend/
-│   ├── public/index.html     # HTML, metadata, skrip eksternal
-│   ├── src/App.js            # Komposisi halaman dan scroll
-│   ├── src/components/      # Konten dan efek visual
-│   ├── src/components/ui/   # Komponen UI pendukung
-│   ├── craco.config.js      # Alias dan dev server
+│   ├── public/index.html     # HTML, metadata, external scripts
+│   ├── src/App.js            # Page composition and scrolling
+│   ├── src/components/      # Content and visual effects
+│   ├── src/components/ui/   # Supporting UI components
+│   ├── craco.config.js      # Aliases and development server
 │   ├── package.json
 │   └── yarn.lock
 ├── backend/
-│   ├── server.py            # FastAPI dan penyimpanan status
+│   ├── server.py            # FastAPI and status storage
 │   ├── requirements.txt
 │   └── pytest.ini
-├── docs/                    # Panduan proyek
-├── memory/PRD.md             # Catatan kebutuhan awal
-├── design_guidelines.json    # Referensi desain
-└── test_result.md            # Catatan pengujian historis
+├── docs/                    # Project guides
+├── memory/PRD.md             # Initial requirements notes
+├── design_guidelines.json    # Design reference
+└── test_result.md            # Historical testing notes
 ```
 
-## Teknologi
+## Technology
 
-| Bagian | Teknologi |
+| Area | Stack |
 | --- | --- |
 | UI | React 19, Tailwind CSS 3 |
-| Animasi | Framer Motion 11, Lenis |
+| Animation | Framer Motion 11, Lenis |
 | 3D | Three.js, React Three Fiber, Drei |
 | Tooling | react-scripts 5, CRACO 7, Yarn Classic |
-| Backend opsional | FastAPI, Pydantic, Motor, MongoDB |
+| Optional backend | FastAPI, Pydantic, Motor, MongoDB |
 
-## Build produksi
+## Production build
 
-Dari folder `frontend`:
+From the `frontend` directory:
 
 ```powershell
 yarn build
 ```
 
-Hasil ada di `frontend/build/` untuk hosting statis. Lihat [panduan hosting](docs/DEVELOPMENT.md#build-dan-hosting). Repository tidak menetapkan URL deployment produksi.
+The output is in `frontend/build/` for static hosting. See the [hosting guide](docs/DEVELOPMENT.md#build-and-hosting). The repository does not specify a production deployment URL.
 
 ## WebStorm
 
-Pilih **File > Open**, lalu buka folder root `farewell-michelle`. Buka `README.md` untuk navigasi dokumentasi. Jalankan perintah frontend melalui terminal terintegrasi, atau buat run configuration untuk script `start` dalam `frontend/package.json`.
+Choose **File > Open** and open the `farewell-michelle` root directory. Open `README.md` to navigate the documentation. Run frontend commands in the integrated terminal, or create a run configuration for the `start` script in `frontend/package.json`.
 
-## Status implementasi
+## Implementation status
 
-Frontend belum terhubung ke backend. Tidak ada login, formulir pengiriman surat, atau editor konten. HTML memuat skrip Emergent dan inisialisasi PostHog; font dimuat dari Google Fonts. Frontend tidak sepenuhnya offline meskipun tidak memakai API lokal.
+The frontend is not connected to the backend. There is no login, letter submission form, or content editor. The HTML loads Emergent scripts and initializes PostHog; fonts are loaded from Google Fonts. The frontend is not fully offline even though it does not use the local API.
 
-Dokumentasi menjelaskan kode saat ini. Catatan PRD dan hasil tes historis bukan bukti bahwa semua rencana atau tes telah diterapkan pada versi sekarang.
+This documentation describes the current code. The PRD and historical test notes do not establish that every plan or test has been implemented in the current version.

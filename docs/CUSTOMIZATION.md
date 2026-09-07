@@ -1,34 +1,34 @@
-# Kustomisasi Konten dan Tampilan
+# Content and Appearance Customization
 
-## Konten
+## Content
 
-| Yang diubah | Lokasi | Cara |
+| What to change | Location | Method |
 | --- | --- | --- |
-| Baris judul | `frontend/src/components/Hero.js` | Edit array `lines` dan `MaskedLine` tambahan |
-| Penerima | `frontend/src/components/Hero.js` | Edit elemen `data-testid="hero-name"` |
-| Surat | `frontend/src/components/Letter.js` | Edit array `paragraphs`; satu string menghasilkan satu paragraf |
-| Penutup dan pengirim | `frontend/src/components/Signature.js` | Edit kalimat penutup dan teks tanda tangan |
-| Judul tab dan deskripsi | `frontend/public/index.html` | Edit `<title>` dan meta description |
+| Heading lines | `frontend/src/components/Hero.js` | Edit the `lines` array and additional `MaskedLine` |
+| Recipient | `frontend/src/components/Hero.js` | Edit the `data-testid="hero-name"` element |
+| Letter | `frontend/src/components/Letter.js` | Edit the `paragraphs` array; each string produces one paragraph |
+| Closing message and sender | `frontend/src/components/Signature.js` | Edit the closing sentence and signature text |
+| Browser tab title and description | `frontend/public/index.html` | Edit `<title>` and the meta description |
 
-Pertahankan sintaks string JavaScript yang valid dan simpan UTF-8 agar emoji serta karakter Mandarin utuh. Saat hanya mengubah desain, pertahankan isi string dan batas paragraf.
+Keep JavaScript string syntax valid and save files as UTF-8 to preserve emoji and Chinese characters. When changing only the design, preserve the string contents and paragraph boundaries.
 
-## Tampilan dan animasi
+## Appearance and animations
 
-- **Palet latar:** `color`/`colorB` mesh, lampu, dan latar Canvas di `AuroraBackground.js`; warna body juga berada di `App.css`.
-- **Kartu kaca:** radius, transparansi, blur, border, serta bayangan di `GlassCard.js`. Padding setiap bagian diatur saat kartu dipakai di `Hero.js` atau `Letter.js`.
-- **Tipografi:** `.font-heading`, `.font-apple`, dan `.font-signature` di `App.css`. Caveat dimuat dari Google Fonts.
-- **Lebar dan jarak:** kelas Tailwind `max-w-lg`, padding, `space-y-7`, dan breakpoint `sm:` di komponen konten.
-- **Animasi teks:** properti `initial`, `animate`, `whileInView`, dan `transition` pada komponen masing-masing.
-- **Scroll halus:** konfigurasi Lenis di `App.js`.
-- **Percikan:** jumlah, ukuran, jarak, dan waktu pembersihan di `TapSparkles.js`; keyframe `burst` di `App.css`.
-- **Beban rendering:** jumlah Sparkles, segmen sphere, dan DPR Canvas di `AuroraBackground.js`.
+- **Background palette:** mesh `color`/`colorB`, lights, and the Canvas background in `AuroraBackground.js`; the body color is also in `App.css`.
+- **Glass cards:** radius, transparency, blur, borders, and shadows in `GlassCard.js`. Section padding is set where the card is used in `Hero.js` or `Letter.js`.
+- **Typography:** `.font-heading`, `.font-apple`, and `.font-signature` in `App.css`. Caveat loads from Google Fonts.
+- **Width and spacing:** Tailwind classes such as `max-w-lg`, padding, `space-y-7`, and the `sm:` breakpoint in the content components.
+- **Text animations:** the `initial`, `animate`, `whileInView`, and `transition` properties in each component.
+- **Smooth scrolling:** Lenis configuration in `App.js`.
+- **Sparkles:** count, size, distance, and cleanup timing in `TapSparkles.js`; the `burst` keyframe in `App.css`.
+- **Rendering workload:** Sparkles counts, sphere segments, and Canvas DPR in `AuroraBackground.js`.
 
-Nama komponen di atas relatif terhadap `frontend/src/components/`; `App.js` dan `App.css` berada di `frontend/src/`.
+Component filenames above are relative to `frontend/src/components/`; `App.js` and `App.css` are in `frontend/src/`.
 
-## Alur pembaruan
+## Update workflow
 
-Konten dikompilasi bersama frontend. Mengganti surat memerlukan build dan publikasi ulang; tidak ada dashboard editor atau sumber konten remote. Jangan menaruh secret dalam komponen atau environment frontend karena hasilnya dapat dibaca browser.
+Content is compiled with the frontend. Changing the letter requires rebuilding and publishing again; there is no editor dashboard or remote content source. Do not place secrets in components or frontend environment variables because the output is readable by the browser.
 
-Integrasi Emergent dan PostHog ada di `public/index.html`; font eksternal ada di HTML dan `App.css`. Perubahan integrasi perlu diperiksa pada build produksi.
+Emergent and PostHog integrations are in `public/index.html`; external fonts are referenced in the HTML and `App.css`. Integration changes should be checked in a production build.
 
-Setelah mengedit, ikuti [verifikasi perubahan](DEVELOPMENT.md#verifikasi-perubahan).
+After editing, follow the [change verification steps](DEVELOPMENT.md#verifying-changes).

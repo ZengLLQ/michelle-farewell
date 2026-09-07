@@ -1,10 +1,10 @@
-# Panduan Pengembangan
+# Development Guide
 
 ## Setup
 
-Gunakan Node.js yang kompatibel dengan dependency di `frontend/package.json` dan Yarn Classic 1.22.22. Repository tidak mempunyai `.nvmrc` atau deklarasi `engines` untuk mengunci Node. Browser memerlukan JavaScript dan WebGL untuk latar 3D. Python/MongoDB hanya diperlukan untuk [backend opsional](BACKEND.md).
+Use Node.js compatible with the dependencies in `frontend/package.json` and Yarn Classic 1.22.22. The repository has no `.nvmrc` or `engines` declaration to pin Node. The browser needs JavaScript and WebGL for the 3D background. Python/MongoDB is only required for the [optional backend](BACKEND.md).
 
-Dari root proyek:
+From the project root:
 
 ```powershell
 cd frontend
@@ -12,74 +12,74 @@ yarn install --frozen-lockfile
 yarn start
 ```
 
-Server default berada di [localhost:3000](http://localhost:3000). Hentikan dengan `Ctrl+C`. Gunakan lockfile Yarn yang tersedia; hindari mencampur lockfile npm. Instalasi mengambil paket visual editing dari URL tarball dalam manifest.
+The default server is at [localhost:3000](http://localhost:3000). Stop it with `Ctrl+C`. Use the existing Yarn lockfile and avoid mixing in an npm lockfile. Installation downloads the visual editing package from the tarball URL in the manifest.
 
-## Arsitektur
+## Architecture
 
-`src/index.js` memasang `App` ke elemen `root`. `App` menjalankan Lenis melalui `requestAnimationFrame`, memasang latar dan efek tap, lalu merender `Hero`, `Letter`, dan `Signature`. Loop dan instance Lenis dibersihkan saat komponen dilepas.
+`src/index.js` mounts `App` into the `root` element. `App` runs Lenis through `requestAnimationFrame`, mounts the background and tap effects, then renders `Hero`, `Letter`, and `Signature`. The animation loop and Lenis instance are cleaned up when the component unmounts.
 
-| Komponen | Tanggung jawab |
+| Component | Responsibility |
 | --- | --- |
-| `Hero.js` | Pembuka, nama penerima, parallax, petunjuk scroll |
-| `Letter.js` | Array konten dan kemunculan paragraf |
-| `Signature.js` | Pesan penutup dan tanda tangan |
-| `GlassCard.js` | Kartu kaca dan tilt mouse berbasis spring |
-| `AuroraBackground.js` | Scene, kamera, material, dan partikel 3D |
-| `TapSparkles.js` | Percikan pada event pointerdown |
+| `Hero.js` | Opening text, recipient name, parallax, scroll hint |
+| `Letter.js` | Content array and paragraph reveal animations |
+| `Signature.js` | Closing message and signature |
+| `GlassCard.js` | Glass cards and spring-based mouse tilt |
+| `AuroraBackground.js` | 3D scene, camera, materials, and particles |
+| `TapSparkles.js` | Sparkles on pointerdown events |
 
-Semua file komponen tersebut ada di `frontend/src/components/`. Latar membaca posisi scroll melalui ref dan memperbarui warna, rotasi, serta kamera setiap frame. Halaman tidak memasang router atau mengambil konten dari API. Dependency tambahan dan komponen `ui/` tidak semuanya digunakan oleh halaman aktif.
+These components are in `frontend/src/components/`. The background reads the scroll position through a ref and updates colors, rotation, and the camera each frame. The page does not mount a router or fetch content from an API. Not all additional dependencies and `ui/` components are used by the active page.
 
-## Konfigurasi
+## Configuration
 
-| Lokasi / variabel | Fungsi |
+| Location / variable | Purpose |
 | --- | --- |
-| `craco.config.js` | Alias `@` ke `src`, lint hooks, kompatibilitas webpack-dev-server 5 |
-| `tailwind.config.js` | Konfigurasi Tailwind |
-| `jsconfig.json` | Resolusi import editor |
-| `ENABLE_HEALTH_CHECK=true` | Plugin health check webpack dan endpoint pada dev server |
-| `PORT` | Port development server |
-| `PUBLIC_URL` | Base URL aset saat build untuk subpath |
+| `craco.config.js` | Alias `@` to `src`, hook linting, webpack-dev-server 5 compatibility |
+| `tailwind.config.js` | Tailwind configuration |
+| `jsconfig.json` | Editor import resolution |
+| `ENABLE_HEALTH_CHECK=true` | Webpack health check plugin and development server endpoints |
+| `PORT` | Development server port |
+| `PUBLIC_URL` | Asset base URL when building for a subpath |
 
-Contoh mengganti port di PowerShell, dari `frontend`:
+To change the port in PowerShell, run from `frontend`:
 
 ```powershell
 $env:PORT = '3001'
 yarn start
 ```
 
-Sesudah server berhenti, hapus override dengan `Remove-Item Env:PORT`. Frontend tidak membutuhkan `.env` atau `REACT_APP_*` untuk halaman saat ini. File `.env` diabaikan Git.
+After stopping the server, remove the override with `Remove-Item Env:PORT`. The current frontend page does not require `.env` or `REACT_APP_*` variables. Git ignores `.env` files.
 
-Wrapper visual editing hanya dimuat pada mode development. Skrip eksternal dalam `public/index.html` tetap menjadi bagian HTML produksi.
+The visual editing wrapper loads only in development mode. External scripts in `public/index.html` remain part of the production HTML.
 
-## Build dan hosting
+## Build and hosting
 
-Dari `frontend`, jalankan `yarn build`. Gunakan direktori proyek hosting `frontend`, perintah instalasi `yarn install --frozen-lockfile`, perintah build `yarn build`, dan direktori publikasi `build`. Jika layanan bekerja dari root repository, sesuaikan langkah masuk folder dan gunakan `frontend/build` sebagai hasil publikasi.
+Run `yarn build` from `frontend`. Configure the hosting project directory as `frontend`, the installation command as `yarn install --frozen-lockfile`, the build command as `yarn build`, and the publish directory as `build`. If the service runs commands from the repository root, adjust the directory change and use `frontend/build` as the publish output.
 
-Untuk subpath, set `PUBLIC_URL` sebelum build dan verifikasi URL aset pada lokasi sebenarnya. Sajikan hasil melalui HTTP; membuka `public/index.html` lewat `file://` tidak menjalankan aplikasi. Backend tidak perlu diterbitkan untuk halaman surat saat ini.
+For a subpath deployment, set `PUBLIC_URL` before building and verify asset URLs at the actual location. Serve the output over HTTP; opening `public/index.html` through `file://` does not run the application. The current letter page does not require a deployed backend.
 
-## Verifikasi perubahan
+## Verifying changes
 
-Untuk perubahan aplikasi, jalankan build dan periksa browser:
+For application changes, run a build and check the browser:
 
-1. Pembuka, tujuh paragraf, dan tanda tangan lengkap, termasuk emoji dan karakter non-Latin.
-2. Teks terbaca di ponsel maupun desktop tanpa scroll horizontal.
-3. Progres scroll, kemunculan paragraf, latar, tilt mouse, dan percikan tap bekerja.
-4. Console tidak menunjukkan error aplikasi dan aset build termuat melalui hosting.
+1. The opening section, seven paragraphs, and signature are complete, including emoji and non-Latin characters.
+2. Text is readable on mobile and desktop without horizontal scrolling.
+3. Scroll progress, paragraph reveals, the background, mouse tilt, and tap sparkles work.
+4. The console has no application errors and the hosted build loads its assets.
 
-`yarn test` tersedia, tetapi belum ada test case frontend dalam repository. Folder root `tests/` hanya berisi `__init__.py`; backend memiliki konfigurasi pytest, bukan kumpulan tes implementasi. `test_result.md` merupakan catatan historis.
+`yarn test` is available, but the repository does not yet contain frontend test cases. The root `tests/` directory contains only `__init__.py`; the backend has pytest configuration, not an implementation test suite. `test_result.md` is a historical record.
 
-Untuk dokumentasi, periksa kecocokan perintah dan path dengan kode, tautan lokal, serta `git diff --check`. Build saja tidak membuktikan animasi atau aksesibilitas benar. Kode belum menyediakan fallback WebGL khusus atau penanganan preferensi reduced motion.
+For documentation changes, check commands and paths against the code, validate local links, and run `git diff --check`. A successful build alone does not establish correct animations or accessibility. The code does not yet provide a dedicated WebGL fallback or reduced-motion preference handling.
 
 ## Troubleshooting
 
-| Gejala | Pemeriksaan |
+| Symptom | Check |
 | --- | --- |
-| `package.json` tidak ditemukan | Masuk ke folder `frontend` |
-| `craco` tidak ditemukan | Instal dependency dari `frontend` |
-| Port 3000 terpakai | Gunakan `PORT` lain |
-| Paket visual editing gagal diunduh | Periksa akses host tarball yang tertera di manifest |
-| Latar gagal atau lambat | Periksa WebGL, hardware acceleration, console, DPR, dan jumlah partikel |
-| Font tanda tangan berbeda | Periksa akses Google Fonts; tersedia fallback cursive |
-| Backend gagal karena environment | Isi `MONGO_URL` dan `DB_NAME` sebelum menjalankan server |
+| `package.json` not found | Switch to the `frontend` directory |
+| `craco` not found | Install dependencies from `frontend` |
+| Port 3000 is occupied | Use a different `PORT` |
+| Visual editing package download fails | Check access to the tarball host listed in the manifest |
+| Background fails or runs slowly | Check WebGL, hardware acceleration, the console, DPR, and particle counts |
+| Signature font looks different | Check Google Fonts access; a cursive fallback is available |
+| Backend fails because of environment variables | Set `MONGO_URL` and `DB_NAME` before starting the server |
 
-Kembali ke [README](../README.md).
+Return to the [README](../README.md).
