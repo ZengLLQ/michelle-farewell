@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
 import Lenis from "lenis";
+import { Analytics } from "@vercel/analytics/react";
 import "@/App.css";
 import { AuroraBackground } from "@/components/AuroraBackground";
 import { TapSparkles } from "@/components/TapSparkles";
@@ -41,6 +42,7 @@ function App() {
         <Letter />
         <Signature />
       </main>
+      <Analytics />
     </div>
   );
 }
